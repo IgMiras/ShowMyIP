@@ -19,9 +19,10 @@ const App = () => {
       center: [mapLongitude, mapLatitude],
       zoom: mapZoom
     })
+    console.log(mapLongitude, mapLatitude)
     setMap(map)
     return () => map.remove()
-  }, [])
+  }, [mapLatitude, mapLongitude])
 
   return (
     <>
