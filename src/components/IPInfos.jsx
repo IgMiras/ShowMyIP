@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react"
 import Axios from 'axios'
 
-const IPInfos = () => {
+const IPInfos = (props) => {
     const [ipInfos, setIpInfos] = useState({})
 
     const fetchData = () => {
         Axios.get('http://ip-api.com/json/').then((res) => {
             setIpInfos(res.data)
-        })
+            props.setMapLongitude(res.data.lon)
+            props.setMapLatitude(res.data.lat)
+        }).catch((err) => console.log(err))
     }
 
     useEffect(() => {
