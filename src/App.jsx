@@ -17,7 +17,7 @@ const App = () => {
   useEffect(() => {
     const fetchData = async () => {
       try{
-        const response = await Axios.get('http://localhost:3001/')
+        const response = await Axios.get('https://api-show-my-ip.onrender.com')
         console.log('Vindo do localhost: ', response)
         const userIP = response.data.ip
         const infoResponse = await Axios.get(`https://ipapi.co/${userIP}/json`)
@@ -25,22 +25,20 @@ const App = () => {
         setIpInfos(infoResponse.data)
         setMapLongitude(infoResponse.data.longitude)
         setMapLatitude(infoResponse.data.latitude)
+        let map = tt.map({
+          key: 'itH5JL3iSUKfcpYTMX1VSSMjaxduVfmV',
+          container: mapElement.current,
+          center: [mapLongitude, mapLatitude],
+          zoom: mapZoom
+        })
+        console.log(mapLongitude, mapLatitude)
+        setMap(map)
       } catch (err) {
         console.error('Error while GET Api: ', err)
       }
     }
     fetchData()
-
-    let map = tt.map({
-      key: 'itH5JL3iSUKfcpYTMX1VSSMjaxduVfmV',
-      container: mapElement.current,
-      center: [mapLongitude, mapLatitude],
-      zoom: mapZoom
-    })
-    console.log(mapLongitude, mapLatitude)
-    setMap(map)
-    return () => map.remove()
-  }, [])
+  }, [mapLongitude, mapLatitude])
 
   return (
     <>
